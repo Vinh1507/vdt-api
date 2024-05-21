@@ -24,11 +24,24 @@ pipeline {
                 }
             }
         }
+        stage('Start Services with Docker Compose') {
+            steps {
+                script {
+                    sh '''
+                        cd ./vdt_api
+                        docker compose up -d
+                        '''
+                }
+            }
+        }
         stage('Run Tests') {
             steps {
                 script {
                     docker.image(DOCKER_IMAGE).inside {
-                        sh 'python manage.py test'
+                        sh '''
+                        cd /app
+                        python manage.py test
+                        '''
                     }
                 }
             }

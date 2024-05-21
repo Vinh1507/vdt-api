@@ -11,13 +11,7 @@ services:
       - DATABASE_NAME=vdt_db
       - DATABASE_USER=vinhbh
       - DATABASE_PASSWORD=123456789
-      - DATABASE_HOST=vdt-db
-      - DATABASE_PORT=5432
+      - DATABASE_HOST=192.168.144.129
+      - DATABASE_PORT=5433
     ports:
       - 8000:8000
-    networks:
-      - vdt-db_vdt-network
-
-networks:
-  vdt-db_vdt-network:
-    external: true
