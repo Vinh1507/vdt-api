@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo "Clone code from branch ${env.BRANCH_NAME}"
+                echo "Clone code from branch ${env.BRANCH_NAME} (update v2)"
                 git branch: env.BRANCH_NAME, url: 'https://github.com/Vinh1507/vdt-api'
             }
         }
