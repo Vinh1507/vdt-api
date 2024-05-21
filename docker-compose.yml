@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  vdt-api:
+    build: ./vdt_api
+    container_name: vdt-api
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./vdt_api:/app
+    environment:
+      - DATABASE_NAME=vdt_db
+      - DATABASE_USER=vinhbh
+      - DATABASE_PASSWORD=123456789
+      - DATABASE_HOST=vdt-db
+      - DATABASE_PORT=5432
+    ports:
+      - 8000:8000
+    networks:
+      - vdt-db_vdt-network
+
+networks:
+  vdt-db_vdt-network:
+    external: true
