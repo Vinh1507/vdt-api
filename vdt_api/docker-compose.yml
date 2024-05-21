@@ -12,6 +12,6 @@ services:
       - DATABASE_USER=vinhbh
       - DATABASE_PASSWORD=123456789
       - DATABASE_HOST=192.168.144.129
-      - DATABASE_PORT=5433
+      - DATABASE_PORT=5432
     ports:
       - 8000:8000
