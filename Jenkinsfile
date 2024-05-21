@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'vinhbh/vdt-api'
-        TAG_NAME: '1.0'
+        TAG_NAME = '1.0'
         VDT_API_DOCKERFILE_PATH = './vdt_api'
         VDT_API_DOCKER_COMPOSE_FILE_PATH = './vdt_api'
         DOCKER_IMAGE: "${IMAGE_NAME}:${TAG_NAME}"
