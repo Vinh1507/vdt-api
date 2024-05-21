@@ -1,3 +1,11 @@
+boolean isPullRequestToMain = (env.CHANGE_ID != null && env.CHANGE_TARGET == 'main')
+boolean isPushCommit = (env.CHANGE_ID == null && env.BRANCH_NAME != null)
+
+if (!isPullRequestToMain && !isPushCommit) {
+    echo "Not a pull request to main branch or a push commit. Skipping build."
+    return
+}
+
 pipeline {
     agent any
 
