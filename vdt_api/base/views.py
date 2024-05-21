@@ -17,6 +17,7 @@ def getRoutes(request):
 
 @api_view(['GET'])
 def getStudents(request):
+    print('ok')
     query = request.GET.get('query')
     if query is None: 
         query = ''
