@@ -12,8 +12,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Clone code from branch main'
-                git branch: 'main', url: 'https://github.com/Vinh1507/vdt-api'
+                echo "Clone code from branch ${env.BRANCH_NAME}"
+                git branch: env.BRANCH_NAME, url: 'https://github.com/Vinh1507/vdt-api'
             }
         }
         stage('Build Image') {
