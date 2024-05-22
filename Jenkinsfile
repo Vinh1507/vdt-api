@@ -11,10 +11,10 @@ pipeline {
         VDT_API_DOCKERFILE_PATH = './vdt_api'
         VDT_API_DOCKER_COMPOSE_FILE_PATH = './vdt_api'
         DOCKER_IMAGE = "${IMAGE_NAME}:${TAG_NAME}"
-        DATABASE_NAME=vdt_db
-        DATABASE_USER=vinhbh
-        DATABASE_PASSWORD=123456789
-        DATABASE_HOST=192.168.144.135
+        DATABASE_NAME='vdt_db'
+        DATABASE_USER='vinhbh'
+        DATABASE_PASSWORD='123456789'
+        DATABASE_HOST='192.168.144.135'
         DATABASE_PORT=5432
     }
 
