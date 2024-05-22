@@ -1,5 +1,6 @@
 echo "env.CHANGE_TARGET: ${env.CHANGE_TARGET}"
 echo "env.GIT_BRANCH: ${env.GIT_BRANCH}"
+echo "env.BRANCH_NAME: ${env.BRANCH_NAME}"
 
 pipeline {
     agent any
