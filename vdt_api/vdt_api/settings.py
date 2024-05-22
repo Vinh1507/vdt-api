@@ -80,11 +80,11 @@ WSGI_APPLICATION = 'vdt_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("DATABASE_NAME", 'vdt_db'),
-        'USER': os.environ.get("DATABASE_USER", 'vinhbh'),
-        'PASSWORD': os.environ.get("DATABASE_PASSWORD", '123456789'),
-        'HOST': os.environ.get("DATABASE_HOST", '192.168.144.129'),
-        'PORT': os.environ.get("DATABASE_PORT", 5432),
+        'NAME': os.environ.get("DATABASE_NAME"),
+        'USER': os.environ.get("DATABASE_USER"),
+        'PASSWORD': os.environ.get("DATABASE_PASSWORD"),
+        'HOST': os.environ.get("DATABASE_HOST"),
+        'PORT': os.environ.get("DATABASE_PORT"),
     },
 }
 
