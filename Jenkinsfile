@@ -1,6 +1,10 @@
 echo "env.CHANGE_TARGET: ${env.CHANGE_TARGET}"
-echo "env.GIT_BRANCH: ${env.GIT_BRANCH}"
 echo "env.BRANCH_NAME: ${env.BRANCH_NAME}"
+
+if (env.CHANGE_TARGET != 'main'){
+    echo "Not a Pull Request target branch main"
+    return;
+}
 
 pipeline {
     agent any
@@ -19,29 +23,6 @@ pipeline {
     }
 
     stages {
-        // stage('Check PR Target') {
-        //     when {
-        //         expression {
-        //             // Kiểm tra nếu đây là pull request
-        //             echo "env.CHANGE_TARGET: ${env.CHANGE_TARGET}"
-        //             echo "env.GIT_BRANCH: ${env.GIT_BRANCH}"
-        //             if (env.CHANGE_TARGET) {
-        //                 // Lấy thông tin nhánh mục tiêu của pull request
-        //                 def prTargetBranch = env.CHANGE_TARGET
-        //                 echo "Pull Request target branch: ${prTargetBranch}"
-        //                 // Chỉ chạy nếu nhánh mục tiêu là 'main'
-        //                 return prTargetBranch == 'main'
-        //             } else {
-        //                 // Không phải là pull request, chạy cho bất kỳ nhánh nào
-        //                 echo "Not a pull request 2"
-        //                 return true
-        //             }
-        //         }
-        //     }
-        //     steps {
-        //         echo "Proceeding with build..."
-        //     }
-        // }
         stage('Checkout') {
             steps {
                 echo "Clone code from branch ${env.BRANCH_NAME}"
