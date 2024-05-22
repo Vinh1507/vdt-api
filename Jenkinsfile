@@ -59,11 +59,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    docker.image(env.DOCKER_IMAGE).inside("-e DATABASE_NAME=${DATABASE_NAME} 
-                    -e DATABASE_USER=${DATABASE_USER} 
-                    -e DATABASE_PASSWORD=${DATABASE_PASSWORD}
-                    -e DATABASE_HOST=${DATABASE_HOST}
-                    -e DATABASE_PORT=${DATABASE_PORT}") {
+                    docker.image(env.DOCKER_IMAGE).inside("-e DATABASE_NAME=${DATABASE_NAME} -e DATABASE_USER=${DATABASE_USER} -e DATABASE_PASSWORD=${DATABASE_PASSWORD} -e DATABASE_HOST=${DATABASE_HOST} -e DATABASE_PORT=${DATABASE_PORT}") {
                         sh '''
                         cd /app
                         python manage.py test
