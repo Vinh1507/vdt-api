@@ -1,23 +1,35 @@
-boolean isPullRequestToMain = (env.CHANGE_ID != null && env.CHANGE_TARGET == 'main')
-boolean isPushCommit = (env.CHANGE_ID == null && env.BRANCH_NAME != null)
-
-if (!isPullRequestToMain && !isPushCommit) {
-    echo "Not a pull request to main branch or a push commit. Skipping build."
-    return
-}
-
 pipeline {
     agent any
 
     environment {
         IMAGE_NAME = 'vinhbh/vdt-api'
-        TAG_NAME = '1.0'
+        TAG_NAME = '3.0'
         VDT_API_DOCKERFILE_PATH = './vdt_api'
         VDT_API_DOCKER_COMPOSE_FILE_PATH = './vdt_api'
         DOCKER_IMAGE = "${IMAGE_NAME}:${TAG_NAME}"
     }
 
     stages {
+        stage('Check PR Target') {
+            when {
+                expression {
+                    // Kiểm tra nếu đây là pull request
+                    if (env.CHANGE_TARGET) {
+                        // Lấy thông tin nhánh mục tiêu của pull request
+                        def prTargetBranch = env.CHANGE_TARGET
+                        echo "Pull Request target branch: ${prTargetBranch}"
+                        // Chỉ chạy nếu nhánh mục tiêu là 'main'
+                        return prTargetBranch == 'main'
+                    } else {
+                        // Không phải là pull request, chạy cho bất kỳ nhánh nào
+                        return true
+                    }
+                }
+            }
+            steps {
+                echo "Proceeding with build..."
+            }
+        }
         stage('Checkout') {
             steps {
                 echo "Clone code from branch ${env.BRANCH_NAME}"
