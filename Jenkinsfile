@@ -1,3 +1,7 @@
+echo "env.CHANGE_TARGET: ${env.CHANGE_TARGET}"
+echo "env.GIT_BRANCH: ${env.GIT_BRANCH}"
+echo "env.BRANCH_NAME: ${env.BRANCH_NAME}"
+
 pipeline {
     agent any
 
@@ -14,6 +18,8 @@ pipeline {
             when {
                 expression {
                     // Kiểm tra nếu đây là pull request
+                    echo "env.CHANGE_TARGET: ${env.CHANGE_TARGET}"
+                    echo "env.GIT_BRANCH: ${env.GIT_BRANCH}"
                     if (env.CHANGE_TARGET) {
                         // Lấy thông tin nhánh mục tiêu của pull request
                         def prTargetBranch = env.CHANGE_TARGET
