@@ -92,10 +92,10 @@ DATABASES['default']['TEST'] = {
     'ENGINE': 'django.db.backends.postgresql',
     # 'NAME': os.environ.get("DATABASE_NAME"),
     'NAME': 'testing_vdt_db',
-    'USER': os.environ.get("DATABASE_USER"),
-    'PASSWORD': os.environ.get("DATABASE_PASSWORD"),
-    'HOST': os.environ.get("DATABASE_HOST"),
-    'PORT': os.environ.get("DATABASE_PORT"),
+    'USER': os.environ.get("DATABASE_USER", 'vinhbh'),
+    'PASSWORD': os.environ.get("DATABASE_PASSWORD", '123456789'),
+    'HOST': os.environ.get("DATABASE_HOST", '192.168.144.135'),
+    'PORT': os.environ.get("DATABASE_PORT", 5432),
 }
 
 
