@@ -11,10 +11,10 @@ pipeline {
         VDT_API_DOCKERFILE_PATH = './vdt_api'
         VDT_API_DOCKER_COMPOSE_FILE_PATH = './vdt_api'
         DOCKER_IMAGE = "${IMAGE_NAME}:${TAG_NAME}"
-        DATABASE_NAME=vdt_db
-        DATABASE_USER=vinhbh
-        DATABASE_PASSWORD=123456789
-        DATABASE_HOST=192.168.144.135
+        DATABASE_NAME='vdt_db'
+        DATABASE_USER='vinhbh'
+        DATABASE_PASSWORD='123456789'
+        DATABASE_HOST='192.168.144.135'
         DATABASE_PORT=5432
     }
 
@@ -59,11 +59,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    docker.image(env.DOCKER_IMAGE).inside("-e DATABASE_NAME=${DATABASE_NAME} 
-                    -e DATABASE_USER=${DATABASE_USER} 
-                    -e DATABASE_PASSWORD=${DATABASE_PASSWORD}
-                    -e DATABASE_HOST=${DATABASE_HOST}
-                    -e DATABASE_PORT=${DATABASE_PORT}") {
+                    docker.image(env.DOCKER_IMAGE).inside("-e DATABASE_NAME=${DATABASE_NAME} -e DATABASE_USER=${DATABASE_USER} -e DATABASE_PASSWORD=${DATABASE_PASSWORD} -e DATABASE_HOST=${DATABASE_HOST} -e DATABASE_PORT=${DATABASE_PORT}") {
                         sh '''
                         cd /app
                         python manage.py test
