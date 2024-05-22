@@ -22,6 +22,7 @@ pipeline {
                         return prTargetBranch == 'main'
                     } else {
                         // Không phải là pull request, chạy cho bất kỳ nhánh nào
+                        echo "Not a pull request"
                         return true
                     }
                 }
