@@ -53,7 +53,6 @@ def getCreateStudent(request):
 
 @api_view(['DELETE'])
 def getDeleteStudent(request, id):
-    print("test delete api")
     try:
         student = Student.objects.get(id=id)
         student.delete()
