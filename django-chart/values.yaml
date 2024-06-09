@@ -15,6 +15,6 @@ database:
   port: 5432
   name: vdt_db
   user: vinhbh
-  password: 123456789
+  password: "123456789"
 
 resources: {}
