@@ -1,0 +1,20 @@
+replicaCount: 1
+
+image:
+  repository: vinhbh/vdt_api
+  tag: "2.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8000
+  nodePort: 30002
+
+database:
+  host: vdt-db
+  port: 5432
+  name: vdt_db
+  user: vinhbh
+  password: 123456789
+
+resources: {}
