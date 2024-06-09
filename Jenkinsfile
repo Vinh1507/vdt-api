@@ -84,7 +84,7 @@ pipeline {
             steps {
                 script {
                     // Modify file
-                    sh """sed -i 's/^  tag.*$/  tag: "${env.TAG_NAME}"/' helm-values/values-prod.yaml"""
+                    sh "sed -i 's/^  tag.*$/  tag: /'v6.2/'/' helm-values/values-prod.yaml"
                 }
             }
         }
