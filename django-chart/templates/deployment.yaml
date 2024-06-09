@@ -29,10 +29,6 @@ spec:
               value: {{ .Values.database.user | quote }}
             - name: DATABASE_PASSWORD
               value: {{ .Values.database.password | quote }}
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: {{ include "django-chart.fullname" . }}-db-secret
-              #     key: database-password
           ports:
             - containerPort: 8000
           resources:
