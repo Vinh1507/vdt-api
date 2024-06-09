@@ -31,5 +31,6 @@ spec:
               value: {{ .Values.database.password | quote }}
           ports:
             - containerPort: 8000
+          command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
