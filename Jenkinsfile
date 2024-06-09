@@ -15,6 +15,7 @@ pipeline {
         DATABASE_PORT = 31776
         DOCKER_HUB_CREDENTIALS = 'dockerhub_vinhbh'
         GITHUB_CREDENTIALS = 'github_Vinh1507'
+        BRANCH_NAME = 'main'
     }
 
     stages {
