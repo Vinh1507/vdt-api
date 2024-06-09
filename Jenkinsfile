@@ -8,11 +8,13 @@ pipeline {
         IMAGE_NAME = 'vinhbh/vdt-api'
         VDT_API_DOCKERFILE_PATH = './vdt_api'
         VDT_API_DOCKER_COMPOSE_FILE_PATH = './vdt_api'
-        DATABASE_NAME='vdt_db'
-        DATABASE_USER='vinhbh'
-        DATABASE_PASSWORD='123456789'
-        DATABASE_HOST='192.168.144.143'
-        DATABASE_PORT=31776
+        DATABASE_NAME = 'vdt_db'
+        DATABASE_USER = 'vinhbh'
+        DATABASE_PASSWORD = '123456789'
+        DATABASE_HOST = '192.168.144.143'
+        DATABASE_PORT = 31776
+        DOCKER_HUB_CREDENTIALS = 'dockerhub_vinhbh'
+        GITHUB_CREDENTIALS = 'github_Vinh1507'
     }
 
     stages {
@@ -52,11 +54,17 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 // Login to Docker Hub
-                withCredentials([usernamePassword(credentialsId: 'dockerhub_vinhbh', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                withCredentials([usernamePassword(credentialsId: env.DOCKER_HUB_CREDENTIALS, passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                     sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                 }
                 // Push Docker image to Docker Hub
                 sh "docker push ${env.IMAGE_NAME}:${env.TAG_NAME}"
+            }
+        }
+        stage('Clone Repo Config') {
+            steps {
+                echo "Clone code from branch ${env.BRANCH_NAME}"
+                git branch: env.BRANCH_NAME, , credentialsId: env.GITHUB_CREDENTIALS, url: 'https://github.com/Vinh1507/vdt-api-config'
             }
         }
     }
