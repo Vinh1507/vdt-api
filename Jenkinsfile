@@ -5,7 +5,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'vinhbh/vdt-api'
+        IMAGE_NAME = 'vinhbh/vdt_api'
         VDT_API_DOCKERFILE_PATH = './vdt_api'
         VDT_API_DOCKER_COMPOSE_FILE_PATH = './vdt_api'
         DATABASE_NAME = 'vdt_db'
@@ -15,7 +15,6 @@ pipeline {
         DATABASE_PORT = 31776
         DOCKER_HUB_CREDENTIALS = 'dockerhub_vinhbh'
         GITHUB_CREDENTIALS = 'github_Vinh1507'
-        BRANCH_NAME = 'main'
     }
 
     stages {
@@ -80,23 +79,24 @@ pipeline {
                 }
             }
         }
-        // stage('Modify file helm values') {
-        //     steps {
-        //         script {
-        //             // Modify file
-        //             sh "sed -i 's/^  tag.*$/  tag: /'v6.2/'/' helm-values/values-prod.yaml"
-        //         }
-        //     }
-        // }
+        stage('Modify file helm values') {
+            steps {
+                script {
+                    // Modify file
+                    sh "sed -i 's/^  tag.*/  tag:\"${env.TAG_NAME}\"/' helm-values/values-prod.yaml"
+                }
+            }
+        }
         stage('Push changes to config repo') {
             steps {
                 script {
                     // Commit and push changes
-                    sh 'git config --global user.email "you@example.com"'
-                    sh 'git config --global user.name "Your Name"'
+                    sh 'git config --global user.email "hoangvinh1577@gmail.com"'
+                    sh 'git config --global user.name "VinhBh"'
                     sh 'git add .'
                     sh 'git commit -m "Update helm values with new image version"'
-                    sh 'git push'
+                    sh 'git remote set-url origin git@github.com:Vinh1507/vdt-api-config.git'
+                    sh 'git push --set-upstream origin main'
                 }
             }
         }
