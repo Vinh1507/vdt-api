@@ -65,7 +65,39 @@ pipeline {
         stage('Clone Repo Config') {
             steps {
                 echo "Clone code from branch ${env.BRANCH_NAME}"
-                git branch: env.BRANCH_NAME, , credentialsId: env.GITHUB_CREDENTIALS, url: 'https://github.com/Vinh1507/vdt-api-config'
+                git branch: env.BRANCH_NAME , credentialsId: env.GITHUB_CREDENTIALS, url: 'https://github.com/Vinh1507/vdt-api-config'
+            }
+        }
+        stage('List directories') {
+            steps {
+                script {
+                    def workspace = pwd()
+                    def directories = sh(script: 'ls -d */', returnStdout: true).trim().split('\n')
+                    echo "Directories in workspace:"
+                    for (directory in directories) {
+                        echo "- $directory"
+                    }
+                }
+            }
+        }
+        stage('Modify file helm values') {
+            steps {
+                script {
+                    // Modify file
+                    sh "sed -i 's/^  tag.*$/  tag: "${env.TAG_NAME}"/' helm-values/values-prod.yaml"
+                }
+            }
+        }
+        stage('Push changes to config repo') {
+            steps {
+                script {
+                    // Commit and push changes
+                    sh 'git config --global user.email "you@example.com"'
+                    sh 'git config --global user.name "Your Name"'
+                    sh 'git add .'
+                    sh 'git commit -m "Update helm values with new image version"'
+                    sh 'git push'
+                }
             }
         }
     }
