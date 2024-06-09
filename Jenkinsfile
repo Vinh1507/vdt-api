@@ -1,11 +1,6 @@
 echo "env.CHANGE_TARGET: ${env.CHANGE_TARGET}"
 echo "env.BRANCH_NAME: ${env.BRANCH_NAME}"
 
-if (env.CHANGE_TARGET && env.CHANGE_TARGET != 'main'){
-    echo "Not a Pull Request target branch main"
-    return;
-}
-
 pipeline {
     agent any
 
