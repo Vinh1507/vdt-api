@@ -14,7 +14,7 @@ pipeline {
         DATABASE_HOST = '192.168.144.143'
         DATABASE_PORT = 31776
         DOCKER_HUB_CREDENTIALS = 'dockerhub_vinhbh'
-        GITHUB_CREDENTIALS = 'github_Vinh1507'
+        GITHUB_CREDENTIALS = 'github-token-v3'
     }
 
     stages {
@@ -67,38 +67,24 @@ pipeline {
                 git branch: env.BRANCH_NAME , credentialsId: env.GITHUB_CREDENTIALS, url: 'https://github.com/Vinh1507/vdt-api-config'
             }
         }
-        stage('List directories') {
-            steps {
-                script {
-                    def workspace = pwd()
-                    def directories = sh(script: 'ls -d */', returnStdout: true).trim().split('\n')
-                    echo "Directories in workspace:"
-                    for (directory in directories) {
-                        echo "- $directory"
-                    }
-                }
-            }
-        }
         stage('Modify file helm values') {
             steps {
                 script {
-                    // Modify file
-                    sh "sed -i 's/^  tag.*/  tag:\"${env.TAG_NAME}\"/' helm-values/values-prod.yaml"
+                    sh "sed -i 's/^  tag.*/  tag: \"${env.TAG_NAME}\"/' helm-values/values-prod.yaml"
                 }
             }
         }
         stage('Push changes to config repo') {
             steps {
-                script {
-                    // Commit and push changes
-                    sh 'git config --global user.email "hoangvinh1577@gmail.com"'
-                    sh 'git config --global user.name "VinhBh"'
-                    sh 'git add .'
-                    sh 'git commit -m "Update helm values with new image version"'
-                    sh 'git remote set-url origin git@github.com:Vinh1507/vdt-api-config.git'
-                    sh 'git push --set-upstream origin main'
+                sh 'git add .'
+                sh 'git commit -m "Update helm values with new image version"'
+                sh 'git config --global user.email "hoangvinh1577@gmail.com"'
+                sh 'git config --global user.name "VinhBh"'
+                withCredentials([gitUsernamePassword(credentialsId: env.GITHUB_CREDENTIALS, gitToolName: 'Default')]) {
+                    sh "git push -u origin main"
                 }
             }
+            
         }
     }
 
