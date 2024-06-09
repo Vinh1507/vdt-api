@@ -80,14 +80,14 @@ pipeline {
                 }
             }
         }
-        stage('Modify file helm values') {
-            steps {
-                script {
-                    // Modify file
-                    sh "sed -i 's/^  tag.*$/  tag: /'v6.2/'/' helm-values/values-prod.yaml"
-                }
-            }
-        }
+        // stage('Modify file helm values') {
+        //     steps {
+        //         script {
+        //             // Modify file
+        //             sh "sed -i 's/^  tag.*$/  tag: /'v6.2/'/' helm-values/values-prod.yaml"
+        //         }
+        //     }
+        // }
         stage('Push changes to config repo') {
             steps {
                 script {
