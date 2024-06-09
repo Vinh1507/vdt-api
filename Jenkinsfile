@@ -54,6 +54,16 @@ pipeline {
                 }
             }
         }
+        stage('Push to Docker Hub') {
+            steps {
+                // Login to Docker Hub
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_vinhbh', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                }
+                // Push Docker image to Docker Hub
+                sh "docker push ${env.IMAGE_NAME}:${env.TAG_NAME}"
+            }
+        }
     }
 
     post {
