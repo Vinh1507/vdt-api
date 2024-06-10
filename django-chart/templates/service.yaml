@@ -8,6 +8,7 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
+      name: vdt-api-port
       targetPort: 8000
       nodePort: {{ .Values.service.nodePort }}
   selector:
