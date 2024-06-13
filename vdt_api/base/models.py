@@ -16,4 +16,14 @@ class Student(models.Model):
     def __str__(self) -> str:
         return self.full_name
     
+class VdtUser(models.Model):
+    username = models.CharField(max_length=255, blank=False)
+    password = models.CharField(max_length=255, null=True)
+    role = models.CharField(max_length=15, null=True, blank=True)
+    full_name = models.CharField(max_length=200, blank=False)
+    class Meta:
+        db_table = 'vdt_users'
+        
+    def __str__(self) -> str:
+        return self.username
 

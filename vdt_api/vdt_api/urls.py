@@ -16,9 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django_ratelimit.decorators import ratelimit
+from django_ratelimit.exceptions import Ratelimited
+from django.http import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('base.urls')),
     path('', include('django_prometheus.urls')),
 ]
+
+def handler403_func(request, exception=None):
+    if isinstance(exception, Ratelimited):
+        return HttpResponse('Sorry you are blocked', status=409)
+    return HttpResponse('Forbidden')
+handler403 = handler403_func

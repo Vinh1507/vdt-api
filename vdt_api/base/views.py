@@ -2,9 +2,16 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from base.models import Student
+from base.models import VdtUser
 from .serializers import StudentSerializer
 from django.db.models import Q
 import json
+from django.http import JsonResponse
+from django.http import HttpResponse
+from django_ratelimit.decorators import ratelimit
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+import jwt
 
 @api_view(['GET', 'POST'])
 def getRoutes(request):
@@ -15,6 +22,7 @@ def getRoutes(request):
     ]
     return Response(routes)
 
+@ratelimit(key='ip', rate='10/m', block=True)
 @api_view(['GET'])
 def getStudents(request):
     query = request.GET.get('query')
@@ -22,7 +30,7 @@ def getStudents(request):
         query = ''
     students = Student.objects.filter(Q(full_name__icontains=query)).order_by('id')
     serializer = StudentSerializer(students, many=True)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['PUT'])
 def getUpdateStudent(request, id):
@@ -68,3 +76,24 @@ def getStudentDetail(request, id):
         return Response(serializer.data)
     except Student.DoesNotExist:
         return Response({"error": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
+    
+@csrf_exempt
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            user = VdtUser.objects.get(username=username, password=password)
+            # Tạo token
+            payload = {
+                'user_id': user.id,
+                'username': user.username,
+            }
+            token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+
+            return JsonResponse({'token': token})
+        except VdtUser.DoesNotExist:
+            return JsonResponse({'error': 'Đăng nhập không thành công'}, status=401)
+    else:
+        return JsonResponse({'error': 'Phương thức không được hỗ trợ'}, status=405)

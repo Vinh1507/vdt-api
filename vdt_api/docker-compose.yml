@@ -11,7 +11,12 @@ services:
       - DATABASE_NAME=vdt_db
       - DATABASE_USER=vinhbh
       - DATABASE_PASSWORD=123456789
-      - DATABASE_HOST=192.168.144.129
-      - DATABASE_PORT=5432
+      - DATABASE_HOST=192.168.144.143
+      - DATABASE_PORT=31495
     ports:
       - 8000:8000
+  
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
