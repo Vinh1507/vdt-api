@@ -12,7 +12,7 @@ pipeline {
         DATABASE_USER = 'vinhbh'
         DATABASE_PASSWORD = '123456789'
         DATABASE_HOST = '192.168.144.143'
-        DATABASE_PORT = 31776
+        DATABASE_PORT = 31495
         DOCKER_HUB_CREDENTIALS = 'dockerhub_vinhbh'
         GITHUB_CREDENTIALS = 'github-token-v3'
     }
